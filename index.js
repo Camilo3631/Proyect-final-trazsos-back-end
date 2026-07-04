@@ -7,6 +7,8 @@ dotenv.config();
 
 import registerRouter from "./routes/register.js";
 import loginRouter from './routes/login.js';
+import disponbilidadRouter from './routes/disponibilidad.js';
+import citasRouter from "./routes/citas.js";
 
 const app = express();
 
@@ -17,11 +19,14 @@ app.use(express.json());
 // Todas las rutas del router comenzarán con /api
 app.use("/api", registerRouter);
 app.use("/api", loginRouter); 
+app.use("/api", disponbilidadRouter);
+app.use("/api", citasRouter);
+
 
 await connectDB();
 
 app.listen(process.env.PORT || 3000, () => {
- // console.log(`Servidor escuchando en el puerto ${process.env.PORT || 3000}`);
+  console.log(`Servidor escuchando en el puerto ${process.env.PORT || 3000}`);
 });
 
 async function connectDB() {
