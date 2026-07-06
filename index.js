@@ -12,6 +12,7 @@ import citasRouter from "./routes/citas.js";
 import doctorsRouter from "./routes/doctors.js";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -28,8 +29,8 @@ app.use("/api", doctorsRouter);
 
 await connectDB();
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor escuchando en el puerto ${process.env.PORT || 3000}`);
+app.listen(PORT, ()  => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
 async function connectDB() {
