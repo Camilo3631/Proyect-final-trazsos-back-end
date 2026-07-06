@@ -9,6 +9,7 @@ import registerRouter from "./routes/register.js";
 import loginRouter from './routes/login.js';
 import disponbilidadRouter from './routes/disponibilidad.js';
 import citasRouter from "./routes/citas.js";
+import doctorsRouter from "./routes/doctors.js";
 
 const app = express();
 
@@ -16,11 +17,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Todas las rutas del router comenzarán con /api
+
+
 app.use("/api", registerRouter);
 app.use("/api", loginRouter); 
 app.use("/api", disponbilidadRouter);
 app.use("/api", citasRouter);
+app.use("/api", doctorsRouter);
 
 
 await connectDB();

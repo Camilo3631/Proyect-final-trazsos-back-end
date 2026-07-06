@@ -50,7 +50,7 @@ router.get('/citas/:userId', async (req, res) => {
   }
 });
 
-// Eliminar cita
+
 router.delete('/citas/:id', async (req, res) => {
   try {
     const { id } = req.params;
