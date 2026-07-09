@@ -25,7 +25,7 @@ app.use("/api", registerRouter);
 app.use("/api", loginRouter); 
 app.use("/api", disponbilidadRouter);
 app.use("/api", citasRouter);
-app.use("/api", doctorsRouter);
+app.use("/api/", doctorsRouter);
 app.use("/api", usersRouter);
 
 await connectDB();
