@@ -110,6 +110,7 @@ router.post('/doctors/register', async (req, res) => {
       }
     );
 
+  console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
 
    const verificationLink =
   `${process.env.FRONTEND_URL}/verify/${verificationToken}`;
