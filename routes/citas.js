@@ -33,6 +33,24 @@ router.post('/citas', async (req, res) => {
   }
 });
 
+router.get('/citas/doctor/:doctorId', async (req, res) => {
+  try {
+    console.log('Doctor ID buscado:', req.params.doctorId);
+    
+    const citas = await req.app.locals.db
+      .collection('citas')
+      .find({ doctorId: req.params.doctorId })
+      .toArray();
+    
+    console.log('Citas encontradas:', citas.length);
+    console.log('Citas:', citas);
+    
+    res.json(citas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 router.get('/citas/:userId', async (req, res) => {
   try {
@@ -65,5 +83,6 @@ router.delete('/citas/:id', async (req, res) => {
     res.status(500).json({ mensaje: 'Error al eliminar cita' });
   }
 });
+
 
 export default router;
