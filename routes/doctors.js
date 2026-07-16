@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { Router } from 'express';
-import bcryptjs from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import { ObjectId } from 'mongodb';
+import { Router } from "express";
+import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+import { ObjectId } from "mongodb";
 
 const router = Router();
 
@@ -22,6 +22,7 @@ const transporter = nodemailer.createTransport({
 const generarCodigoVerificacion = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
+
 
 router.get('/doctors', async (req, res) => {
    try {
@@ -147,7 +148,7 @@ router.post('/doctors/register', async (req, res) => {
      } 
 });
 
-// coloco proyebo ok
+
 router.post('/doctors/verify-code', async (req, res) => {
   try {
      const { email, codigo } = req.body;
