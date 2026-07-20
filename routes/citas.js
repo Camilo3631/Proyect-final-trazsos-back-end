@@ -195,5 +195,77 @@ const articulo = doctorName.startsWith('Dra.') ? 'La Dra.' : 'El Dr.';
       });
     }
 });
+router.put('/citas/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fecha, hora, doctorId } = req.body;
+
+    if (!fecha || !hora || !doctorId) {
+      return res.status(400).json({
+        mensaje: 'Fecha, hora y doctorId son obligatorios'
+      });
+    }
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({
+        mensaje: 'ID de cita inválido'
+      });
+    }
+
+    const cita = await req.app.locals.db
+      .collection('citas')
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!cita) {
+      return res.status(404).json({
+        mensaje: 'Cita no encontrada'
+      });
+    }
+
+    // ← VALIDAR QUE SEA EL DOCTOR
+    if (cita.doctorId !== doctorId) {
+      return res.status(403).json({
+        mensaje: 'Solo el doctor puede editar esta cita'
+      });
+    }
+
+    const citaExistente = await req.app.locals.db
+      .collection('citas')
+      .findOne({
+        doctorId,
+        fecha,
+        hora,
+        _id: { $ne: new ObjectId(id) }
+      });
+
+    if (citaExistente) {
+      return res.status(400).json({
+        mensaje: 'Esa hora ya está ocupada'
+      });
+    }
+
+    await req.app.locals.db
+      .collection('citas')
+      .updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            fecha,
+            hora
+          }
+        }
+      );
+
+    return res.status(200).json({
+      mensaje: 'Cita actualizada con éxito'
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      mensaje: 'Error al actualizar la cita'
+    });
+  }
+});
 
 export default router;
